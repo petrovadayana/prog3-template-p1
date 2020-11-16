@@ -1,0 +1,151 @@
+package model;
+
+import java.util.Arrays;
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Coordinate.
+ */
+public class Coordinate {
+	
+	/** The Constant dimDefault. */
+	private final static int dimDefault = 2;
+	
+	/** The Constant error. */
+	private final static int error = -1;
+	/** The components. */
+	private int [] components;	
+	/**
+	 * Instantiates a new coordinate.
+	 *
+	 * @param x the  x
+	 * @param y the y
+	 */
+	public Coordinate(int x, int y) {
+		components = new int [2];
+		components[0] = x;
+		components[1] = y;
+	}
+	
+	/**
+	 * Instantiates a new coordinate.
+	 *
+	 * @param c the c
+	 */
+	public Coordinate(Coordinate c) {
+		components = new int [dimDefault];
+		for(int i = 0; i < components.length; i++) {
+			components[i] = c.components[i];
+		}
+	}	
+	/**
+	 * Gets the.
+	 *
+	 * @param component the component
+	 * @return the int
+	 */
+	public int get(int component) {
+		if(component >= 0 && component < components.length) {
+			return components[component];
+		}
+		else {
+			System.err.println("Error in Coordinate.get, component " + component + " is out of range");
+		}
+		return error;
+	}
+	
+	
+	/**
+	 * Sets the.
+	 *
+	 * @param component the component
+	 * @param value the value
+	 */
+	public void set(int component, int value) {
+		if(component >= 0 && component < components.length) {
+			components[component] = value;
+		}
+		else {
+			System.err.println("Error in Coordinate.set, component " + component + " is out of range");
+		}
+	}
+	
+	/**
+	 * Adds the.
+	 *
+	 * @param c the c
+	 * @return the coordinate
+	 */
+	
+	public Coordinate add(Coordinate c) {
+		int addValue;
+		Coordinate new_c = new Coordinate(this);
+		for(int i = 0; i < new_c.components.length; i++) {
+			addValue = new_c.get(i) + c.get(i);
+			new_c.set(i, addValue);
+		}
+		return new_c;
+	}
+	
+	/**
+	 * Subtract.
+	 *
+	 * @param c the c
+	 * @return the coordinate
+	 */
+	public Coordinate subtract(Coordinate c) {
+		Coordinate new_c = new Coordinate(this);
+		int subValue;
+		
+		for(int i = 0; i < new_c.components.length; i++) {
+			subValue = new_c.get(i) - c.get(i);
+			new_c.set(i, subValue);
+		}
+		return new_c;
+	}
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
+	public String toString() {
+		StringBuilder resultado = new StringBuilder();
+		resultado.append("(");
+		resultado.append(components[0]);
+		resultado.append(", ");
+		resultado.append(components[1]);
+		resultado.append(")");
+		return resultado.toString();
+		
+	}
+	/**
+	 * Hash code.
+	 *
+	 * @return the int
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(components);
+		return result;
+	}
+	/**
+	 * Equals.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Coordinate other = (Coordinate) obj;
+		if (!Arrays.equals(components, other.components))
+			return false;
+		return true;
+	}
+}
